@@ -108,6 +108,16 @@
         "loving"
       ],
       "id": "10"
+    },
+    {
+      "name": "Jack",
+      "species": "Ocelot",
+      "diet": "carnivore",
+      "personalityTraits": [
+        "anxious",
+        "loving"
+      ],
+      "id": "11"
     }
   ]
 }
