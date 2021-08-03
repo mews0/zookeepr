@@ -1,5 +1,5 @@
-const $animalForm = document.querySelector('#animals-form');
-const $displayArea = document.querySelector('#display-area');
+const $animalForm = document.querySelector(`#animals-form`);
+const $displayArea = document.querySelector(`#display-area`);
 
 const printResults = resultArr => {
   console.log(resultArr);
@@ -13,17 +13,17 @@ const printResults = resultArr => {
       Diet: ${diet.substring(0, 1).toUpperCase() + diet.substring(1)}<br/>
       Personality Traits: ${personalityTraits
         .map(trait => `${trait.substring(0, 1).toUpperCase() + trait.substring(1)}`)
-        .join(', ')}</p>
+        .join(`, `)}</p>
     </div>
   </div>
     `;
   });
 
-  $displayArea.innerHTML = animalHTML.join('');
+  $displayArea.innerHTML = animalHTML.join(``);
 };
 
 const getAnimals = (formData = {}) => {
-  let queryUrl = '/api/animals?';
+  let queryUrl = `/api/animals?`;
 
   Object.entries(formData).forEach(([key, value]) => {
     queryUrl += `${key}=${value}&`;
@@ -34,7 +34,7 @@ const getAnimals = (formData = {}) => {
   fetch(queryUrl)
     .then(response => {
       if (!response.ok) {
-        return alert('Error: ' + response.statusText);
+        return alert(`Error: ` + response.statusText);
       }
       return response.json();
     })
@@ -42,12 +42,11 @@ const getAnimals = (formData = {}) => {
       console.log(animalData);
       printResults(animalData);
     });
-
 };
 
 const handleGetAnimalsSubmit = event => {
   event.preventDefault();
-  const dietRadioHTML = $animalForm.querySelectorAll('[name="diet"]');
+  const dietRadioHTML = $animalForm.querySelectorAll(`[name="diet"]`);
   let diet;
 
   for (let i = 0; i < dietRadioHTML.length; i += 1) {
@@ -57,23 +56,23 @@ const handleGetAnimalsSubmit = event => {
   }
 
   if (diet === undefined) {
-    diet = '';
+    diet = ``;
   }
 
   const personalityTraitArr = [];
-  const selectedTraits = $animalForm.querySelector('[name="personality"').selectedOptions;
+  const selectedTraits = $animalForm.querySelector(`[name="personality"`).selectedOptions;
 
   for (let i = 0; i < selectedTraits.length; i += 1) {
     personalityTraitArr.push(selectedTraits[i].value);
   }
 
-  const personalityTraits = personalityTraitArr.join(',');
+  const personalityTraits = personalityTraitArr.join(`,`);
 
   const animalObject = { diet, personalityTraits };
 
   getAnimals(animalObject);
 };
 
-$animalForm.addEventListener('submit', handleGetAnimalsSubmit);
+$animalForm.addEventListener(`submit`, handleGetAnimalsSubmit);
 
 getAnimals();
